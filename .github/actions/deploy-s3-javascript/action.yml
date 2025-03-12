@@ -11,5 +11,5 @@ description: 'Deploy to AWS S3 bucket'
 runs:
   using: 'node20'
   # pre: 'pre.js'
-  main: 'index.js'
+  main: 'main.js'
   # post: 'post.js'
