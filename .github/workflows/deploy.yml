@@ -72,3 +72,8 @@ jobs:
           uses: actions/checkout@v3
         - name: Run custom action - JSnode -v
           uses: ./.github/actions/deploy-s3-javascript
+          env:
+            AWS: ${{ secrets.AWS }}
+          with:
+            bucket: gha-s3-hosting
+            dist-folder: dist
