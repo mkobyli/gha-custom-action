@@ -11,9 +11,9 @@ inputs:
   dist-folder:
     description: 'Folder contains deploy files'
     required: true
-# outputs:
-#   time: # id of output
-#     description: 'The time we greeted you'
+outputs:
+  url-aws:
+    description: 'The url to website'
 runs:
   using: 'node20'
   # pre: 'pre.js'

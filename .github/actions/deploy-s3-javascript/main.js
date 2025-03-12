@@ -14,6 +14,9 @@ function run() {
 
     const s3Uri = `s3://${bucket}`
     exec.exec(`echo aws ${distFolder} ${s3Uri} --region ${bucketRegion}`)
+
+    const webUrl = `http://${bucket}.${bucketRegion}.com`
+    core.setOutput('url-aws', webUrl)
 }
 
 run();

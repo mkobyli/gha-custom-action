@@ -71,9 +71,13 @@ jobs:
         - name: Get code
           uses: actions/checkout@v3
         - name: Run custom action - JSnode -v
+          id: jsgha
           uses: ./.github/actions/deploy-s3-javascript
           env:
             AWS: ${{ secrets.AWS }}
           with:
             bucket: gha-s3-hosting
             dist-folder: dist
+        - name: URL output
+          run: |
+            echo "Live URL: ${{ steps.jsgha.outputs.url-aws }}"
