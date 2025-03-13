@@ -92,4 +92,4 @@ jobs:
           uses: ./gha_repo/.github/actions/deploy-docker
           with:
             tag-name: build_2025-03-13
-            # repo-path: gha_repo
+            repo-path: gha_repo

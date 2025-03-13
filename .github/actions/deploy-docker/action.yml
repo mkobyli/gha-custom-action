@@ -5,7 +5,7 @@ inputs:
     description: "Name of tag to create on repo"
     required: true
   repo-path:
-    description: "Path to repo if not in root"
+    description: "Relative path under to place the repository if not $GITHUB_WORKSPACE"
     required: false
     default: ''
 outputs:
