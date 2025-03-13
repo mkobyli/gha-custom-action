@@ -94,4 +94,5 @@ jobs:
             tag-name: build_2025-03-13
             user-name: siv-ci
             user-email: siv-ci@noreply.github.com
+            token: ${{ sectrets.SIV_TOKEN }}
             repo-path: gha_repo

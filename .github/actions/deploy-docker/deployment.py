@@ -5,7 +5,12 @@ from git import Repo
 def create_tag():
     tag_name = os.environ['INPUT_TAG-NAME']
     extra_path = os.environ['INPUT_REPO-PATH']
+    token = os.environ['INPUT_TOKEN']
     github_workspace =  os.environ['GITHUB_WORKSPACE']
+    github_repository =  os.environ['GITHUB_REPOSITORY']
+
+    print("GitHub repository: ", github_repository)
+
     repo_path = github_workspace
 
     # Prepare path to repo if not in default place
@@ -39,7 +44,10 @@ def create_tag():
     new_tag = repo.create_tag(tag_name, message=tag_name)
 
     # Push the tag to the remote repository
+    remote_url = f'https://x-access-token:{token}@github.com/{github_repository}'
+    # remote_url = f'https://{token}@github.com/{username}/{repository}.git'
     origin = repo.remote(name='origin')
+    origin.set_url(remote_url)
     origin.push(new_tag)
 
     print(f"Tag '{tag_name}' created and pushed to the remote repository.")
