@@ -44,7 +44,8 @@ def create_tag():
     new_tag = repo.create_tag(tag_name, message=tag_name)
 
     # Push the tag to the remote repository
-    remote_url = f'https://x-access-token:{token}@github.com/{github_repository}'
+    # remote_url = f'https://x-access-token:{token}@github.com/{github_repository}'
+    remote_url = f'https://{token}@github.com/{github_repository}.git'
     # remote_url = f'https://{token}@github.com/{username}/{repository}.git'
     origin = repo.remote(name='origin')
     origin.set_url(remote_url)
