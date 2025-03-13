@@ -4,6 +4,10 @@ inputs:
   tag-name:
     description: "Name of tag to create on repo"
     required: true
+  repo-path:
+    description: "Path to repo if not in root"
+    required: false
+    default: ''
 outputs:
   new-tag:
     description: 'The url to website'

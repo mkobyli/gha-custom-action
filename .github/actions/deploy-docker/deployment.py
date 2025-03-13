@@ -4,10 +4,13 @@ from git import Repo
 
 def create_tag():
     tag_name = os.environ['INPUT_TAG-NAME']
+    extra_path = os.environ['INPUT_REPO-PATH']
     repo_path =  os.environ['GITHUB_WORKSPACE']
+    if extra_path != "":
+        repo_path = repo_path + '/' + extra_path
     print("repo path: ", repo_path)
-    # repo = Repo(path='gha_repo')
-    # last_commit = repo.head.commit
+    repo = Repo(repo_path)
+    last_commit = repo.head.commit
     # print("Last commit message:", last_commit.message)
     # print("Last commit SHA:", last_commit.hexsha)
 
