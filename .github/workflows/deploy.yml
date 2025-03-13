@@ -86,13 +86,13 @@ jobs:
       steps:
         - name: Get code
           uses: actions/checkout@v3
-          with:
-            path: gha_repo
-        - name: Run docker custom action
-          uses: ./gha_repo/.github/actions/deploy-docker
+        - name: Run Update Submodules and Tag Action
+          uses: ./.github/actions/deploy-docker
           with:
             tag-name: build_2025-03-13
+            tag-message: 'build_2025-03-13'
             user-name: siv-ci
             user-email: siv-ci@noreply.github.com
             token: ${{ secrets.GITHUB_TOKEN }}
-            repo-path: gha_repo
+            repo-url: 'https://github.com/mkobyli/gha-custom-action.git'
+            branch: 'main'

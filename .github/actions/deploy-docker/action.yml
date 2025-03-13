@@ -1,25 +1,27 @@
-name: 'Deploy to AWS S3'
-description: 'Deploy to AWS S3 bucket'
+name: 'Update Submodules and Tag'
+description: 'A custom GitHub Action to update submodules, commit changes, create a tag, and push it to the repository'
 inputs:
-  tag-name:
-    description: "Name of tag to create on repo"
+  repo-token:
+    description: 'GitHub token'
     required: true
+  repo-url:
+    description: 'Git repository URL'
+    required: true
+  branch:
+    description: 'Branch to update and tag'
+    required: true
+  tag-name:
+    description: 'Tag name'
+    required: true
+  tag-message:
+    description: 'Tag message'
+    required: false
   user-name:
     description: "Git user name"
     required: true
   user-email:
     description: "E-mail for git user"
     required: true
-  token:
-    description: "User token"
-    required: true
-  repo-path:
-    description: "Relative path under to place the repository if not $GITHUB_WORKSPACE"
-    required: false
-    default: ''
-outputs:
-  new-tag:
-    description: 'The url to website'
 runs:
   using: 'docker'
   image: 'Dockerfile'

@@ -1,57 +1,52 @@
 import os
-from git import Repo
-
+import sys
+import git
 
 def create_tag():
-    tag_name = os.environ['INPUT_TAG-NAME']
-    extra_path = os.environ['INPUT_REPO-PATH']
-    token = os.environ['INPUT_TOKEN']
-    github_workspace =  os.environ['GITHUB_WORKSPACE']
-    github_repository =  os.environ['GITHUB_REPOSITORY']
-
-    print("GitHub repository: ", github_repository)
-
-    repo_path = github_workspace
-
-    # Prepare path to repo if not in default place
-    if extra_path != "":
-        repo_path = github_workspace + '/' + extra_path
-    print("Path to repo: ", repo_path)
-
-    # Create repo object
-    repo = Repo(repo_path)
-
-    # Get the Git command object
-    git_cmd = repo.git
-
-    # Add the directory to the list of safe directories
-    git_cmd.config('--global', '--add', 'safe.directory', repo_path)
-    print(f"Added {repo_path} to safe directories.")
-
+    # Get inputs
     user_name = os.environ['INPUT_USER-NAME']
     email = os.environ['INPUT_USER-EMAIL']
+    token = os.environ['INPUT_TOKEN']
+    repo_url = os.environ['INPUT_REPO-URL']
+    branch = os.environ['INPUT_BRANCH']
+    tag_name = os.environ['INPUT_TAG-NAME']
+    tag_message = os.environ['INPUT_TAG-MESSAGE'] if len(os.environ['INPUT_TAG-MESSAGE']) > 5 else ''
 
+    # Prepare the repository URL with the token
+    repo_clone_url = repo_url.replace('https://', f'https://{token}@')
+
+    # Clone the repository
+    repo_path = '/siv/repo'
+    repo = git.Repo.clone_from(repo_clone_url, repo_path, branch=branch)
+
+    # Configure Git user
     with repo.config_writer() as config:
-      config.set_value('user', 'name', user_name)
-      config.set_value('user', 'email', email)
+        config.set_value('user', 'name', user_name)
+        config.set_value('user', 'email', email)
 
-    print(f"User name {user_name} and email {email} have been set for the local repository.")
+    # Origin set up
+    origin = repo.remote(name='origin')
 
-    last_commit = repo.head.commit
-    print(f"Last commit SHA: {last_commit.hexsha} \n Last commit message: {last_commit.message}")
+    # Update submodules
+    # repo.git.submodule('update', '--init', '--recursive')
 
-    # Create the tag
-    new_tag = repo.create_tag(tag_name, message=tag_name)
+    # Check for changes in submodules
+    # if repo.is_dirty(untracked_files=True):
+    #     # Commit the changes
+    #     repo.git.add(update=True)
+    #     repo.index.commit("Update submodules")
+
+    #     # Push the changes
+    #     origin = repo.remote(name='origin')
+    #     origin.push(branch)
+
+    # Create a new tag
+    new_tag = repo.create_tag(tag_name, message=tag_message)
 
     # Push the tag to the remote repository
-    # remote_url = f'https://x-access-token:{token}@github.com/{github_repository}'
-    remote_url = f'https://{token}@github.com/{github_repository}.git'
-    # remote_url = f'https://{token}@github.com/{username}/{repository}.git'
-    origin = repo.remote(name='origin')
-    origin.set_url(remote_url)
     origin.push(new_tag)
 
-    print(f"Tag '{tag_name}' created and pushed to the remote repository.")
+    print(f"Submodules updated, changes committed, and tag '{tag_name}' created and pushed to the remote repository.")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     create_tag()
