@@ -90,6 +90,8 @@ jobs:
             path: gha_repo
         - name: Run docker custom action
           uses: ./gha_repo/.github/actions/deploy-docker
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
             tag-name: build_2025-03-13
             user-name: siv-ci
