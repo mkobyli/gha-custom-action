@@ -81,3 +81,12 @@ jobs:
         - name: URL output
           run: |
             echo "Live URL: ${{ steps.jsgha.outputs.url-aws }}"
+  create-tag:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Get code
+          uses: actions/checkout@v3
+        - name: Run docker custom action
+          uses: ./.github/actions/deploy-docker
+          with:
+            tag-name: build_2025-03-13

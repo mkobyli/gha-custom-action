@@ -11,6 +11,7 @@ lerna-debug.log*
 dist
 dist-ssr
 *.local
+gitdeply
 
 # Editor directories and files
 .vscode/*

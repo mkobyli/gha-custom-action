@@ -1,0 +1,12 @@
+name: 'Deploy to AWS S3'
+description: 'Deploy to AWS S3 bucket'
+inputs:
+  tag-name:
+    description: "Name of tag to create on repo"
+    required: true
+outputs:
+  new-tag:
+    description: 'The url to website'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
