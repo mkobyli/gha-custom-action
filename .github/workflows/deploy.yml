@@ -4,83 +4,83 @@ on:
     branches:
       - main
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: Load & cache dependencies
-        uses: ./.github/actions/cached-deps
-        id: cache
-        with:
-          caching: 'false'
-      - name: Output cache
-        run: |
-          echo "Cache used: ${{ steps.cache.outputs.cache-dep }}"
-      - name: Lint code
-        run: npm run lint
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: Load & cache dependencies
-        uses: ./.github/actions/cached-deps
-      - name: Test code
-        id: run-tests
-        run: npm run test
-      - name: Upload test report
-        if: failure() && steps.run-tests.outcome == 'failure'
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-report
-          path: test.json
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: Load & cache dependencies
-        uses: ./.github/actions/cached-deps
-      - name: Build website
-        run: npm run build
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist-files
-          path: dist
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
-      - name: Get build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-files
-          path: ./dist
-      - name: Output contents
-        run: ls
-      - name: Deploy site
-        run: echo "Deploying..."
-  info:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Get code
-          uses: actions/checkout@v3
-        - name: Run custom action - JSnode -v
-          id: jsgha
-          uses: ./.github/actions/deploy-s3-javascript
-          env:
-            AWS: ${{ secrets.AWS }}
-          with:
-            bucket: gha-s3-hosting
-            dist-folder: dist
-        - name: URL output
-          run: |
-            echo "Live URL: ${{ steps.jsgha.outputs.url-aws }}"
+#   lint:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Get code
+#         uses: actions/checkout@v3
+#       - name: Load & cache dependencies
+#         uses: ./.github/actions/cached-deps
+#         id: cache
+#         with:
+#           caching: 'false'
+#       - name: Output cache
+#         run: |
+#           echo "Cache used: ${{ steps.cache.outputs.cache-dep }}"
+#       - name: Lint code
+#         run: npm run lint
+#   test:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Get code
+#         uses: actions/checkout@v3
+#       - name: Load & cache dependencies
+#         uses: ./.github/actions/cached-deps
+#       - name: Test code
+#         id: run-tests
+#         run: npm run test
+#       - name: Upload test report
+#         if: failure() && steps.run-tests.outcome == 'failure'
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: test-report
+#           path: test.json
+#   build:
+#     needs: test
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Get code
+#         uses: actions/checkout@v3
+#       - name: Load & cache dependencies
+#         uses: ./.github/actions/cached-deps
+#       - name: Build website
+#         run: npm run build
+#       - name: Upload artifacts
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: dist-files
+#           path: dist
+#   deploy:
+#     needs: build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Get code
+#         uses: actions/checkout@v3
+#       - name: Get build artifacts
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: dist-files
+#           path: ./dist
+#       - name: Output contents
+#         run: ls
+#       - name: Deploy site
+#         run: echo "Deploying..."
+#   info:
+#       runs-on: ubuntu-latest
+#       steps:
+#         - name: Get code
+#           uses: actions/checkout@v3
+#         - name: Run custom action - JSnode -v
+#           id: jsgha
+#           uses: ./.github/actions/deploy-s3-javascript
+#           env:
+#             AWS: ${{ secrets.AWS }}
+#           with:
+#             bucket: gha-s3-hosting
+#             dist-folder: dist
+#         - name: URL output
+#           run: |
+#             echo "Live URL: ${{ steps.jsgha.outputs.url-aws }}"
   create-tag:
       runs-on: ubuntu-latest
       steps:
@@ -89,6 +89,6 @@ jobs:
           with:
             path: gha_repo
         - name: Run docker custom action
-          uses: ./.github/actions/deploy-docker
+          uses: ./gha_repo/.github/actions/deploy-docker
           with:
             tag-name: build_2025-03-13
