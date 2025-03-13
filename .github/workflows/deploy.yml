@@ -92,4 +92,6 @@ jobs:
           uses: ./gha_repo/.github/actions/deploy-docker
           with:
             tag-name: build_2025-03-13
+            user-name: siv-ci
+            user-email: siv-ci@noreply.github.com
             repo-path: gha_repo

@@ -4,6 +4,12 @@ inputs:
   tag-name:
     description: "Name of tag to create on repo"
     required: true
+  user-name:
+    description: "Git user name"
+    required: true
+  user-email:
+    description: "E-mail for git user"
+    required: true
   repo-path:
     description: "Relative path under to place the repository if not $GITHUB_WORKSPACE"
     required: false

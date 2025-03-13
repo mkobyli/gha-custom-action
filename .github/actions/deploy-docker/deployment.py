@@ -23,6 +23,15 @@ def create_tag():
     git_cmd.config('--global', '--add', 'safe.directory', repo_path)
     print(f"Added {repo_path} to safe directories.")
 
+    user_name = os.environ['INPUT_USER-NAME']
+    email = os.environ['INPUT_USER-EMAIL']
+
+    with repo.config_writer() as config:
+      config.set_value('user', 'name', user_name)
+      config.set_value('user', 'email', email)
+
+    print(f"User name {user_name} and email {email} have been set for the local repository.")
+
     last_commit = repo.head.commit
     print(f"Last commit SHA: {last_commit.hexsha} \n Last commit message: {last_commit.message}")
 
