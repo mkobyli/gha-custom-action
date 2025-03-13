@@ -5,7 +5,8 @@ from git import Repo
 def create_tag():
     tag_name = os.environ['INPUT_TAG-NAME']
     repo_path =  os.environ['GITHUB_WORKSPACE']
-    repo = Repo(path=repo_path)
+    print("repo path: ", repo_path)
+    repo = Repo(path='gha_repo')
     last_commit = repo.head.commit
     print("Last commit message:", last_commit.message)
     print("Last commit SHA:", last_commit.hexsha)
