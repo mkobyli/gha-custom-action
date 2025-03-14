@@ -2,7 +2,7 @@ import os
 import sys
 import git
 
-def create_tag():
+def update_and_create_tag():
     # Get inputs
     user_name = os.environ['INPUT_USER-NAME']
     email = os.environ['INPUT_USER-EMAIL']
@@ -59,4 +59,4 @@ def create_tag():
 
 
 if __name__ == "__main__":
-    create_tag()
+    update_and_create_tag()

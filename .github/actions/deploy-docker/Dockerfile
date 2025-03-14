@@ -4,6 +4,6 @@ COPY requirements.txt /requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY deployment.py /deployment.py
+COPY update_and_create_tag.py /update_and_create_tag.py
 
-CMD ["python", "/deployment.py"]
+CMD ["python", "/update_and_create_tag.py"]
