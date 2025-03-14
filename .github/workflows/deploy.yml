@@ -93,6 +93,7 @@ jobs:
             tag-message: 'build_2025-03-13'
             user-name: siv-ci
             user-email: siv-ci@noreply.github.com
-            token: ${{ secrets.GITHUB_TOKEN }}
+            # token: ${{ secrets.GITHUB_TOKEN }}
+            token: ${{ secrets.SIV_TOKEN }}
             repo-url: 'https://github.com/mkobyli/gha-custom-action.git'
             branch: 'main'
