@@ -27,6 +27,11 @@ def create_tag():
     # Origin set up
     origin = repo.remote(name='origin')
 
+    # Log latest commit and sha
+    last_commit = repo.head.commit
+    print(f"Last commit SHA: {last_commit.hexsha}\n Last commit message: {last_commit.message}")
+
+    print("Updating submodules...")
     # Update submodules
     # repo.git.submodule('update', '--init', '--recursive')
 
@@ -34,11 +39,15 @@ def create_tag():
     # if repo.is_dirty(untracked_files=True):
     #     # Commit the changes
     #     repo.git.add(update=True)
-    #     repo.index.commit("Update submodules")
+    #     repo.index.commit("Auto updated submodules")
 
     #     # Push the changes
     #     origin = repo.remote(name='origin')
     #     origin.push(branch)
+
+     # Log latest commit and sha
+    last_commit = repo.head.commit
+    print(f"Last commit SHA: {last_commit.hexsha}\n Last commit message: {last_commit.message}")
 
     # Create a new tag
     new_tag = repo.create_tag(tag_name, message=tag_message)
@@ -47,6 +56,7 @@ def create_tag():
     origin.push(new_tag)
 
     print(f"Submodules updated, changes committed, and tag '{tag_name}' created and pushed to the remote repository.")
+
 
 if __name__ == "__main__":
     create_tag()
